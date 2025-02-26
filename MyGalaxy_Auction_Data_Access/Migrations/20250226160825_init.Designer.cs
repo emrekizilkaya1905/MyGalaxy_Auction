@@ -12,8 +12,8 @@ using MyGalaxy_Auction_Data_Access.Context;
 namespace MyGalaxy_Auction_Data_Access.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250226011636_changeBidStatus")]
-    partial class changeBidStatus
+    [Migration("20250226160825_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -189,7 +189,7 @@ namespace MyGalaxy_Auction_Data_Access.Migrations
 
                     b.HasIndex("VehicleId");
 
-                    b.ToTable("Bid");
+                    b.ToTable("Bids");
                 });
 
             modelBuilder.Entity("MyGalaxy_Auction_Data_Access.Domain.PaymentHistory", b =>
@@ -219,7 +219,7 @@ namespace MyGalaxy_Auction_Data_Access.Migrations
 
                     b.HasIndex("VehicleId");
 
-                    b.ToTable("PaymentHistory");
+                    b.ToTable("PaymentHistories");
                 });
 
             modelBuilder.Entity("MyGalaxy_Auction_Data_Access.Domain.Vehicle", b =>
@@ -231,6 +231,7 @@ namespace MyGalaxy_Auction_Data_Access.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("VehicleId"));
 
                     b.Property<string>("AdditionalInformation")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("AuctionPrice")
@@ -251,6 +252,7 @@ namespace MyGalaxy_Auction_Data_Access.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Image")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsActive")
@@ -263,12 +265,14 @@ namespace MyGalaxy_Auction_Data_Access.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("PlateNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("SellerId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("StartTime")
@@ -278,7 +282,7 @@ namespace MyGalaxy_Auction_Data_Access.Migrations
 
                     b.HasIndex("SellerId");
 
-                    b.ToTable("Vehicle");
+                    b.ToTable("Vehicles");
                 });
 
             modelBuilder.Entity("MyGalaxy_Auction_Data_Access.Models.ApplicationUser", b =>
@@ -448,7 +452,9 @@ namespace MyGalaxy_Auction_Data_Access.Migrations
                 {
                     b.HasOne("MyGalaxy_Auction_Data_Access.Models.ApplicationUser", "Seller")
                         .WithMany("Vehicles")
-                        .HasForeignKey("SellerId");
+                        .HasForeignKey("SellerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Seller");
                 });
