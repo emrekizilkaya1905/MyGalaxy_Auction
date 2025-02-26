@@ -18,14 +18,14 @@ namespace MyGalaxy_Auction_Data_Access.Domain
 		public decimal EngineCapacity { get; set; }
 		public decimal Price { get; set; }
 		public int Millage { get; set; }
-		public string? PlateNumber { get;set; }
+		public string PlateNumber { get;set; }
 		public double AuctionPrice { get; set; }
-		public string? AdditionalInformation { get; set; }
+		public string AdditionalInformation { get; set; }
 		public DateTime StartTime { get; set; }
 		public DateTime EndTime { get; set; }
 		public bool IsActive { get; set; }
-		public string? Image { get; set; }
-		public string? SellerId { get; set; }
+		public string Image { get; set; }
+		public string SellerId { get; set; }
 		public ApplicationUser Seller { get; set; }
 		public virtual List<Bid> Bids { get; set; }
 	}
